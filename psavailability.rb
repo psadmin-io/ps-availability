@@ -149,7 +149,7 @@ statusPage = `copy /a header.html+table.html+foother.html status.html`
 deployFile = `xcopy status.html #{deployPath} /y`
 
 # If the environment is newly down, send the email
-# If the environment has been marked down (exists in 'down.txt'), don't resend the email
+# If the environment was already down (exists in 'down.txt'), don't resend the email
 if affectedEnvironments.empty?
 
 	# if no environments are down, delete the 'down.txt' file

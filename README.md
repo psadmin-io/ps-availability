@@ -1,3 +1,5 @@
+# PeopleSoft System Status Notifications
+
 Do you get notified if an app server, web server or process scheduler go down? If you do, good for you! If not, here is a solution I put together that will send you notifications (and build a status page) if a web server, app server, or process scheduler go down.
 
 If you are an admin who doesn't have access to monitoring tools (and there are lots of you), this post will go over a script I wrote to build a System Status page and send email notifications. You can run the script on any machine and it will send an email if anything has gone down. A `status.html` page is also generated so that users can go check on the status for their system.
@@ -54,3 +56,7 @@ Make sure this command points to our new `e:\ruby22-x64` folder first.
 3.  `gem install mail`
 
 That's it for the Gems.
+
+## More Information
+
+To get more details on the script, visit [psadmin.io](http://psadmin.io) and [check out the blog post on the script](http://psadmin.io/2016/03/14/peoplesoft-system-status-notifications/).
