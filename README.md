@@ -60,3 +60,5 @@ That's it for the Gems.
 ## More Information
 
 To get more details on the script, visit [psadmin.io](http://psadmin.io) and [check out the blog post on the script](http://psadmin.io/2016/03/14/peoplesoft-system-status-notifications/).
+
+ [1]: https://github.com/oneclick/rubyinstaller/wiki/Development-Kit
