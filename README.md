@@ -2,7 +2,7 @@ Do you get notified if an app server, web server or process scheduler go down? I
 
 If you are an admin who doesn't have access to monitoring tools (and there are lots of you), this post will go over a script I wrote to build a System Status page and send email notifications. You can run the script on any machine and it will send an email if anything has gone down. A `status.html` page is also generated so that users can go check on the status for their system.
 
-<img src="http://psadmin.io/wp-content/uploads/2016/03/Screen-Shot-2016-03-10-at-1.43.10-PM-300x244.png" alt="Status HTML Page" width="600" height="488" class="aligncenter size-medium wp-image-1500" />
+<img src="http://psadmin.io/wp-content/uploads/2016/03/Screen-Shot-2016-03-10-at-1.43.10-PM-300x244.png" alt="Status HTML Page" />
 
 This page and script is something I put together over a few days. We wanted a simple page that would give us the status of each component in an environment. I used the Ruby Gem Mechanize to open the login page, login as a user, and navigate to the Process Monitor Server List page.
 
