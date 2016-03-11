@@ -17,7 +17,7 @@ require 'mail'
 # ---------------------------
 smtpServer 				= '<smtp server>'
 statusUser 				= '<PeopleSoft Username>'
-statusUserPwd 			= '<PeopleSoft Password'
+statusUserPwd 			= '<PeopleSoft Password>'
 homepageTitleCheck 		= '<Homepage Title>'
 fromEmailAddress 		= '<From email address>'
 toEmailAddress 			= '<To email address>'

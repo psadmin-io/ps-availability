@@ -10,5 +10,3 @@ cd \
 cd psoft\status
 
 ruby ps92availability.rb 
-
-xcopy status.html e:\psoft\HR92DMO\webserv\hr92dmo\applications\peoplesoft\PORTAL.war\ /y
