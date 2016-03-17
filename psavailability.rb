@@ -11,6 +11,10 @@ require 'mechanize'
 require 'csv'
 require 'redcarpet'
 require 'mail'
+require 'logger'
+
+log = Logger.new('psavailability.log')
+log.level = Logger::INFO
 
 # ---------------------------
 # Change these variables
@@ -32,6 +36,7 @@ end
 affectedEnvironments = Array.new
 notify = false
 
+agent = Mechanize.new
 agent.user_agent_alias = 'Windows IE 9'
 
 table =          "| Environment | Database | Web Status | App Status | Scheduler | Batch Server | Update Time | Batch Status |\n"
@@ -39,7 +44,6 @@ table = table +  "| ----------- | -------- | ---------- | ---------- | ---------
 
 # Get the list of environments
 # the URLs.txt file is a CSV file with the format "DBNAME,baseURL,processMonitorURI"
-agent = Mechanize.new
 URLs = CSV.read('URLs.txt', {:col_sep => ','})
 URLs.shift # Remove Header Row
 
@@ -80,6 +84,7 @@ URLs.each { |environment, loginURL, prcsURI|
 				app_status = 'Runnning'
 			else
 				app_status = 'Down'
+				log.info(homepage)
 			end
 		rescue
 			app_status = 'Down'
