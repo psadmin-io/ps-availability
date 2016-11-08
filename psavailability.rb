@@ -117,6 +117,7 @@ URLs.each { |environment, loginURL, prcsURI|
 		begin
 			logoutURL = loginURL + '?cmd=logout'
 			agent.get(logoutURL)
+			agent.cookie_jar.clear!
 		rescue
 		end
 
