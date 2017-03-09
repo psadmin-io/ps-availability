@@ -2,21 +2,31 @@
 # Requires Ruby Dev Kit
 # 
 # gem install mechanize
-# gem install redcarpet
 # gem install mail
 #
 # Make sure the TNS_ADMIN environment variable is set
 
 require 'mechanize'
 require 'csv'
-require 'haml'
 require 'mail'
 require 'logger'
 
-def add_row(row_data, header = false)
+def add_row(status_table, row_data, row_type)
 
-	
+	# Build a new row and set the row type
+	status_table << "<tr class='#{row_type}'>"
 
+	case  
+	when row_type == "header"
+		row_data.each do |item|
+			status_table << "<td>#{item}</td>"
+		end
+	when row_type == "environment"
+		row_data.each do |key, item|
+			status_table << "<td class='#{item.downcase}'>#{item}</td>"
+		end
+	end
+	status_table << '</tr>'
 end
 
 log = Logger.new('psavailability.log')
@@ -26,14 +36,17 @@ log.level = Logger::INFO
 # Change these variables
 # ---------------------------
 smtpServer 				= '<smtp server>'
-statusUser 				= '<PeopleSoft Username>'
-statusUserPwd 			= '<PeopleSoft Password>'
-homepageTitleCheck 		= '<Homepage Title>'
+# statusUser 				= '<PeopleSoft Username>'
+# statusUserPwd 			= '<PeopleSoft Password>'
+# homepageTitleCheck 		= '<Homepage Title>'
 fromEmailAddress 		= '<From email address>'
 toEmailAddress 			= '<To email address>'
 deployPath				= '<e:\\path\\to\\PORTAL.war\\>'
 # ---------------------------
 
+statusUser = 'STATUS'
+statusUserPwd = 'gCdRIL+5eWGZ'
+homepageTitleCheck = '9.2'
 
 Mail.defaults do
   delivery_method :smtp, address: smtpServer, port: 25
@@ -50,8 +63,10 @@ agent.user_agent_alias = 'Windows IE 11'
 URLs = CSV.read('URLs.txt', {:col_sep => ','})
 URLs.shift # Remove Header Row
 
-html = ''
+table = ''
+table = '<table>'
 headers = ["Domain", "Database", "Web Server", "App Server", "Scheduler", "Batch Server", "Updated", "Batch Status"]
+add_row(table, headers, "header")
 
 
 URLs.each { |environment, loginURL, prcsURI|  
@@ -59,10 +74,7 @@ URLs.each { |environment, loginURL, prcsURI|
 	domain = Hash.new
 
 	domain["environment"] = environment
-	domain["web_status"] = 'Running'
-	domain["app_status"] = 'Running'
-	domain["database"]   = 'Running'
-
+	
 	begin
 		t = `tnsping #{environment}`
 
@@ -78,6 +90,11 @@ URLs.each { |environment, loginURL, prcsURI|
 	# Check web server by opening login page
 	begin
 		signon_page = agent.get(loginURL + '?cmd=login')
+		if signon_page.content_type.include? "html"
+			domain["web_status"] = 'Running'
+		else
+			domain["web_status"] = 'Down'
+		end
 	rescue
 		domain["web_status"] = 'Down'
 	end
@@ -128,16 +145,22 @@ URLs.each { |environment, loginURL, prcsURI|
 	rescue
 	end
 
-	table = table + [environment, database, web_status, app_status, scheduler_status]
-	
+	add_row(table, domain, "environment")
+
 	# If a component is down, add the environment to the affectedEnvironments list
-	if domain["web_status"].include?("Down") || domain["app_status"].include?("Down") || domain["scheduler_status"].include?("Down")
+	if domain["web_status"] == "Down" || domain["app_status"] == "Down" || domain["scheduler_status"] == "Down"
 		affectedEnvironments.push(environment)
 	end
 }
 
 
+status_file = ''
+status_file << File.read("header.html")
+status_file << table
+status_file << File.read("footer.html")
+File.write("status.html", status_file)
 
+=begin
 deployFile = `xcopy status.html #{deployPath} /y`
 
 # If the environment is newly down, send the email
@@ -188,3 +211,5 @@ if notify
 	  end
 	end 
 end # end Notify
+
+=end

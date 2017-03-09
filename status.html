@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -12,290 +11,54 @@
     <link rel="shortcut icon" href="favicon.png">
     <meta http-equiv="refresh" content="630">
 
-    <title>Sample PeopleSoft Status</title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"> 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <title>PeopleSoft Status</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $('.header').click(function(){
+          $(this).nextUntil('tr.header').slideToggle(10);
+        });
+    </script>
     <style>
-    td {
-        align: center;
-    }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }   
-    th {
-        padding-right: 10px;
-        padding-left: 5px;
-        background-color: #069;
-        color: #ffffff;
-    }
-    td {
-        padding: 3px;
-    }
-    .down {
-        font-weight: 600;
-        color: #cc2900;
-    }
+        tr.header {
+          padding-right: 10px;
+          padding-left: 5px;
+          background-color: #069;
+          color: #ffffff;
+          font-weight: 600;
+        }
+
+        tr.environment {
+          cursor: pointer;
+        }
+
+        tr.data {
+          display:none;
+          background: #FAF6E4;
+        }
+
+        td {
+          align: center;
+          padding: 3px;
+        }
+
+      /*  tr:nth-child(3n+1) {
+          background-color: #f2f2f2;
+        }*/
+
+        .down {
+          font-weight: 600;
+          color: #cc2900;
+        }
+
+        .warning {
+          font-weight: 600;
+          color: #f0ad4e;
+        }
+
     </style>
 </head>
 <body>
-<table><thead>
-<tr>
-<th>Environment</th>
-<th>Database</th>
-<th>Web Status</th>
-<th>App Status</th>
-<th>Scheduler</th>
-<th>Batch Server</th>
-<th>Update Time</th>
-<th>Batch Status</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>HR92DMO</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:31:30PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>HR92SBX</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:32:07PM</td>
-<td class="down">Down</td>
-</tr>
-<tr>
-<td>HR92DEV</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:31:59PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>HR92TST</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:32:21PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>HR92QA</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:34:58PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>HR92QA</td>
-<td>Running</td>
-<td class="down">Down</td>
-<td class="down">Down</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:34:58PM</td>
-<td class="down">Down</td>
-</tr>
-<tr>
-<td>HR92PRD</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-P1</td>
-<td>03/10/2016  1:34:31PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>HR92PRD</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-P1</td>
-<td>03/10/2016  1:34:31PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92DMO</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:31:33PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92SBX</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:31:38PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92DEV</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:32:07PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92TST</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:32:05PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92QA</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:34:54PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92QA</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:34:54PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92PRD</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-P1</td>
-<td>03/10/2016  1:34:59PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>ELM92PRD</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-P1</td>
-<td>03/10/2016  1:34:59PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92DMO</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:35:20PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92SBX</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:35:06PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92DEV</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:34:34PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92TST</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-D1</td>
-<td>03/10/2016  1:35:20PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92QA</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:34:55PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92QA</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-Q1</td>
-<td>03/10/2016  1:34:55PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92PRD</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-P1</td>
-<td>03/10/2016  1:35:05PM</td>
-<td>Running</td>
-</tr>
-<tr>
-<td>FS92PRD</td>
-<td>Running</td>
-<td>Running</td>
-<td>Runnning</td>
-<td>PSNT</td>
-<td>PRCS-P1</td>
-<td>03/10/2016  1:35:05PM</td>
-<td>Running</td>
-</tr>
-</tbody></table>
-
+<table><tr class='header'><td>Domain</td><td>Database</td><td>Web Server</td><td>App Server</td><td>Scheduler</td><td>Batch Server</td><td>Updated</td><td>Batch Status</td></tr><tr class='environment'><td class='hr92sbx'>HR92SBX</td><td class='running'>Running</td><td class='running'>Running</td><td class='runnning'>Runnning</td><td class='psnt'>PSNT</td><td class='hrprcs003q'>HRPRCS003Q</td><td class='03/09/2017  9:45:24am'>03/09/2017  9:45:24AM</td><td class='running'>Running</td></tr><tr class='environment'><td class='elm92sbx'>ELM92SBX</td><td class='running'>Running</td><td class='running'>Running</td><td class='runnning'>Runnning</td><td class='psnt'>PSNT</td><td class='hrprcs003q'>HRPRCS003Q</td><td class='03/09/2017  9:45:14am'>03/09/2017  9:45:14AM</td><td class='running'>Running</td></tr><tr class='environment'><td class='fs92sbx'>FS92SBX</td><td class='running'>Running</td><td class='running'>Running</td><td class='runnning'>Runnning</td><td class='psnt'>PSNT</td><td class='fsprcs003q'>FSPRCS003Q</td><td class='03/09/2017  9:45:20am'>03/09/2017  9:45:20AM</td><td class='running'>Running</td></tr>
+</body>
+</html>

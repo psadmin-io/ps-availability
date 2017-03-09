@@ -1,0 +1,476 @@
+# Logfile created on 2017-03-09 08:45:59 -0600 by logger.rb/44203
+I, [2017-03-09T09:37:34.579981 #2548]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x4734c60 URL:http://hrapp004q.ci.minneapolis.mn.us:10220/psp/hr92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/hr92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x2337d74 type: text name: userid value: ]
+    [field:0x2337c60 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x233700c type: submit name: hrdev value: HR]
+    [button:0x2336e8c type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:37:34.765535 #2548]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x455cbc8 URL:http://hrapp004q.ci.minneapolis.mn.us:12220/psp/elm92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link "Error" nil>
+  #<Mechanize::Page::Link
+   "Set Trace Flags"
+   "/psp/elm92sbx/?cmd=login&trace=y&languageCd=ENG">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login&languageCd=ENG"}
+   {fields
+    [hidden:0x229a940 type: hidden name: timezoneOffset value: 0]
+    [hidden:0x229a820 type: hidden name: ptmode value: f]
+    [hidden:0x229a6d0 type: hidden name: ptlangcd value: ENG]
+    [hidden:0x229a580 type: hidden name: ptinstalledlang value: ENG]
+    [text:0x229a3a0 type: text name: userid value: ]
+    [field:0x229a190 type: password name: pwd value: ]
+    [selectlist:0x22974d8 type:  name: ptlangsel value: ENG]}
+   {radiobuttons}
+   {checkboxes
+    [checkbox:0x2297d24 type: checkbox name: accessible value: false]}
+   {file_uploads}
+   {buttons [submit:0x2297fb8 type: submit name: Submit value: Sign In]}>}>
+
+I, [2017-03-09T09:37:34.933510 #2548]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x441d128 URL:http://fsapp004q.ci.minneapolis.mn.us:15220/psp/fs92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/fs92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x21ebcb0 type: text name: userid value: ]
+    [field:0x21ebb84 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x21eb1dc type: submit name: hrdev value: HR]
+    [button:0x21eb0b0 type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:38:02.236316 #1684]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x49506a8 URL:http://hrapp004q.ci.minneapolis.mn.us:10220/psp/hr92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/hr92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x2445cd8 type: text name: userid value: ]
+    [field:0x2445ba0 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x2444d90 type: submit name: hrdev value: HR]
+    [button:0x2444bb0 type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:38:02.374993 #1684]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x4798200 URL:http://hrapp004q.ci.minneapolis.mn.us:12220/psp/elm92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link "Error" nil>
+  #<Mechanize::Page::Link
+   "Set Trace Flags"
+   "/psp/elm92sbx/?cmd=login&trace=y&languageCd=ENG">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login&languageCd=ENG"}
+   {fields
+    [hidden:0x23b8330 type: hidden name: timezoneOffset value: 0]
+    [hidden:0x23b80b4 type: hidden name: ptmode value: f]
+    [hidden:0x23b5ec4 type: hidden name: ptlangcd value: ENG]
+    [hidden:0x23b5d80 type: hidden name: ptinstalledlang value: ENG]
+    [text:0x23b5bf4 type: text name: userid value: ]
+    [field:0x23b5a74 type: password name: pwd value: ]
+    [selectlist:0x23b5048 type:  name: ptlangsel value: ENG]}
+   {radiobuttons}
+   {checkboxes
+    [checkbox:0x23b57ec type: checkbox name: accessible value: false]}
+   {file_uploads}
+   {buttons [submit:0x23b5948 type: submit name: Submit value: Sign In]}>}>
+
+I, [2017-03-09T09:38:02.533203 #1684]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x4644168 URL:http://fsapp004q.ci.minneapolis.mn.us:15220/psp/fs92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/fs92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x2307474 type: text name: userid value: ]
+    [field:0x230733c type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x2306940 type: submit name: hrdev value: HR]
+    [button:0x230682c type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:39:52.744433 #2972]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x47a3528 URL:http://hrapp004q.ci.minneapolis.mn.us:10220/psp/hr92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/hr92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x237e1fc type: text name: userid value: ]
+    [field:0x237e100 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x237b388 type: submit name: hrdev value: HR]
+    [button:0x237b1d8 type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:39:52.877251 #2972]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x45fd5f0 URL:http://hrapp004q.ci.minneapolis.mn.us:12220/psp/elm92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link "Error" nil>
+  #<Mechanize::Page::Link
+   "Set Trace Flags"
+   "/psp/elm92sbx/?cmd=login&trace=y&languageCd=ENG">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login&languageCd=ENG"}
+   {fields
+    [hidden:0x22d2a70 type: hidden name: timezoneOffset value: 0]
+    [hidden:0x22d2950 type: hidden name: ptmode value: f]
+    [hidden:0x22d27f4 type: hidden name: ptlangcd value: ENG]
+    [hidden:0x22d26b0 type: hidden name: ptinstalledlang value: ENG]
+    [text:0x22d2494 type: text name: userid value: ]
+    [field:0x22d2254 type: password name: pwd value: ]
+    [selectlist:0x22cf764 type:  name: ptlangsel value: ENG]}
+   {radiobuttons}
+   {checkboxes
+    [checkbox:0x22cfe0c type: checkbox name: accessible value: false]}
+   {file_uploads}
+   {buttons [submit:0x22d202c type: submit name: Submit value: Sign In]}>}>
+
+I, [2017-03-09T09:39:53.034483 #2972]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x44b1ca0 URL:http://fsapp004q.ci.minneapolis.mn.us:15220/psp/fs92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/fs92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x22402a4 type: text name: userid value: ]
+    [field:0x22401a8 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x223d874 type: submit name: hrdev value: HR]
+    [button:0x223d748 type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:40:04.058805 #1244]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x46b4da0 URL:http://hrapp004q.ci.minneapolis.mn.us:10220/psp/hr92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/hr92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x22f5f3c type: text name: userid value: ]
+    [field:0x22f5df8 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x22f51a4 type: submit name: hrdev value: HR]
+    [button:0x22f5060 type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:40:04.215045 #1244]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x44ed088 URL:http://hrapp004q.ci.minneapolis.mn.us:12220/psp/elm92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link "Error" nil>
+  #<Mechanize::Page::Link
+   "Set Trace Flags"
+   "/psp/elm92sbx/?cmd=login&trace=y&languageCd=ENG">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login&languageCd=ENG"}
+   {fields
+    [hidden:0x2262bac type: hidden name: timezoneOffset value: 0]
+    [hidden:0x2262a68 type: hidden name: ptmode value: f]
+    [hidden:0x2262954 type: hidden name: ptlangcd value: ENG]
+    [hidden:0x2262834 type: hidden name: ptinstalledlang value: ENG]
+    [text:0x2262648 type: text name: userid value: ]
+    [field:0x22623e4 type: password name: pwd value: ]
+    [selectlist:0x225f798 type:  name: ptlangsel value: ENG]}
+   {radiobuttons}
+   {checkboxes
+    [checkbox:0x226200c type: checkbox name: accessible value: false]}
+   {file_uploads}
+   {buttons [submit:0x2262270 type: submit name: Submit value: Sign In]}>}>
+
+I, [2017-03-09T09:40:04.383003 #1244]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x43b5598 URL:http://fsapp004q.ci.minneapolis.mn.us:15220/psp/fs92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/fs92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x21bbe84 type: text name: userid value: ]
+    [field:0x21bbdac type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x21bb3ec type: submit name: hrdev value: HR]
+    [button:0x21bb2cc type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:40:30.490338 #1996]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x4640d18 URL:http://hrapp004q.ci.minneapolis.mn.us:10220/psp/hr92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/hr92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x22abde8 type: text name: userid value: ]
+    [field:0x22abcf8 type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x22ab0ec type: submit name: hrdev value: HR]
+    [button:0x22aaf24 type: button name: fsdev value: Finance]}>}>
+
+I, [2017-03-09T09:40:30.651477 #1996]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x4464de0 URL:http://hrapp004q.ci.minneapolis.mn.us:12220/psp/elm92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link "Error" nil>
+  #<Mechanize::Page::Link
+   "Set Trace Flags"
+   "/psp/elm92sbx/?cmd=login&trace=y&languageCd=ENG">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login&languageCd=ENG"}
+   {fields
+    [hidden:0x221e9f8 type: hidden name: timezoneOffset value: 0]
+    [hidden:0x221e8e4 type: hidden name: ptmode value: f]
+    [hidden:0x221e7ac type: hidden name: ptlangcd value: ENG]
+    [hidden:0x221e668 type: hidden name: ptinstalledlang value: ENG]
+    [text:0x221e530 type: text name: userid value: ]
+    [field:0x221e344 type: password name: pwd value: ]
+    [selectlist:0x221b5c0 type:  name: ptlangsel value: ENG]}
+   {radiobuttons}
+   {checkboxes
+    [checkbox:0x221befc type: checkbox name: accessible value: false]}
+   {file_uploads}
+   {buttons [submit:0x221e0ec type: submit name: Submit value: Sign In]}>}>
+
+I, [2017-03-09T09:40:30.924925 #1996]  INFO -- : #<Mechanize::Page
+ {url
+  #<URI::HTTP:0x43292d0 URL:http://fsapp004q.ci.minneapolis.mn.us:15220/psp/fs92sbx/?&cmd=login&errorCode=105&languageCd=ENG>}
+ {meta_refresh}
+ {title "COMET Sandbox"}
+ {iframes}
+ {frames}
+ {links
+  #<Mechanize::Page::Link
+   "Forgot yourHR password?"
+   "http://hrapp004q.ci.minneapolis.mn.us:10220/psc/hr92sbx_fp/EMPLOYEE/HRMS/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Forgot yourFinance password?"
+   "http://fsapp004q.ci.minneapolis.mn.us:15220/psc/fs92sbx_fp/EMPLOYEE/ERP/c/MAINTAIN_SECURITY.EMAIL_PSWD.GBL">
+  #<Mechanize::Page::Link
+   "Tennessen Confidentiality Notice"
+   "/fs92sbx/HRIS-Tennessen.pdf">}
+ {forms
+  #<Mechanize::Form
+   {name "login"}
+   {method "POST"}
+   {action "?&cmd=login"}
+   {fields
+    [text:0x2175d98 type: text name: userid value: ]
+    [field:0x2175c6c type: password name: pwd value: ]}
+   {radiobuttons}
+   {checkboxes}
+   {file_uploads}
+   {buttons
+    [button:0x2175294 type: submit name: hrdev value: HR]
+    [button:0x21751b0 type: button name: fsdev value: Finance]}>}>
+
