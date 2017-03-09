@@ -8,17 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
     <meta http-equiv="refresh" content="630">
 
     <title>PeopleSoft Status</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-        $('.header').click(function(){
-          $(this).nextUntil('tr.header').slideToggle(10);
-        });
-    </script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style>
         tr.header {
           padding-right: 10px;
@@ -42,19 +37,26 @@
           padding: 3px;
         }
 
-      /*  tr:nth-child(3n+1) {
-          background-color: #f2f2f2;
-        }*/
-
         .down {
           font-weight: 600;
           color: #cc2900;
         }
 
-        .warning {
+        .stale {
           font-weight: 600;
           color: #f0ad4e;
         }
+
+        td.PSGRIDNAVIGATOR {
+          display: none;
+        }
+
+        td.PSLEVEL1GRIDLABEL {
+          font-weight: 600;
+          color: darkgreen;
+          text-align: left;
+        }
+
 
     </style>
 </head>

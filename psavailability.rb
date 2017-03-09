@@ -11,10 +11,10 @@ require 'csv'
 require 'mail'
 require 'logger'
 
-def add_row(status_table, row_data, row_type)
+def add_row(status_table, row_data, row_type, opts = {})
 
 	# Build a new row and set the row type
-	status_table << "<tr class='#{row_type}'>"
+	status_table << "<tr class=\"#{row_type}\">"
 
 	case  
 	when row_type == "header"
@@ -23,8 +23,19 @@ def add_row(status_table, row_data, row_type)
 		end
 	when row_type == "environment"
 		row_data.each do |key, item|
-			status_table << "<td class='#{item.downcase}'>#{item}</td>"
+			if key.include? "status"
+				status_table << "<td class=\"#{item.downcase}\">#{item}</td>"
+			else
+				status_table << "<td>#{item}</td>"
+			end
+
 		end
+	when row_type == "data"
+		status_table << "<td colspan=\"8\">"
+		# row_data.each do |key, item|
+		# 	status_table << key + ', ' + item + '</br>'
+		# end
+		status_table << row_data.to_s
 	end
 	status_table << '</tr>'
 end
@@ -35,13 +46,15 @@ log.level = Logger::INFO
 # ---------------------------
 # Change these variables
 # ---------------------------
-smtpServer 				= '<smtp server>'
+smtpServer 				= 'mail.ci.minneapolis.mn.us'
 # statusUser 				= '<PeopleSoft Username>'
 # statusUserPwd 			= '<PeopleSoft Password>'
 # homepageTitleCheck 		= '<Homepage Title>'
-fromEmailAddress 		= '<From email address>'
-toEmailAddress 			= '<To email address>'
-deployPath				= '<e:\\path\\to\\PORTAL.war\\>'
+fromEmailAddress 		= 'comet_status@minneapolismn.gov'
+toEmailAddress 			= 'dan.iverson@minneapolismn.gov'
+deployPath				= 'E:\\psoft\\HR92DMO\\webserv\\hr92dmo\\applications\\peoplesoft\\PORTAL.war\\status\\'
+zone 					= "Central Time (US & Canada)" 
+staleInterval			= 10
 # ---------------------------
 
 statusUser = 'STATUS'
@@ -67,7 +80,7 @@ table = ''
 table = '<table>'
 headers = ["Domain", "Database", "Web Server", "App Server", "Scheduler", "Batch Server", "Updated", "Batch Status"]
 add_row(table, headers, "header")
-
+end_table = '</table>'
 
 URLs.each { |environment, loginURL, prcsURI|  
 
@@ -117,26 +130,57 @@ URLs.each { |environment, loginURL, prcsURI|
 		domain["app_status"] = 'Down'
 	end
 
+	# Build URL for Process Monitor and access the component page directly
+	procMonURL = loginURL + prcsURI
+	procMonURL.sub! '/psp/', '/psc/'
 	begin
-		# Build URL for Process Monitor and access the component page directly
-		procMonURL = loginURL + prcsURI
-		procMonURL.sub! '/psp/', '/psc/'
-
+		
 		server_list = agent.get(procMonURL)
 		schedulers = server_list.search(".PSLEVEL1GRID").collect do |html|
 			# Iterate through the Server List grid (but skip the first row - the header)
 			html.search("tr").collect.drop(1).each do |row|
 				domain["server"]   		= row.search("td[1]/div/span/a").text.strip
 		    	domain["hostname"]    	= row.search("td[2]/div/span").text.strip
-		    	domain["last_update"] 	= row.search("td[3]/div/span").text.strip
+		    	domain["last_update"] 	= row.search("td[3]/div/span").text.strip.gsub("\u00A0", "")
 				domain["status"]    	= row.search("td[9]/div/span").text.strip
+
+				# If last_update is more than 30 minutes ago, set scheduler status to Stale
+				last_upd = DateTime.strptime("#{domain['last_update']} #{zone}", '%m/%d/%Y %l:%M:%S%p %Z')
+				now = DateTime.now
+				diff = ((now - last_upd) * 24 * 60).to_i
+				
+				if diff > staleInterval
+					domain["status"] = "Stale"
+				end
+
 			end
 		end
 	rescue
 		domain["status"] = 'Down'
 	end
 
+	add_row(table, domain, "environment")
+
+	##
 	## grab additional data for the environment
+	##
+
+	## IB Domain Status
+	ibDomainURL = procMonURL
+	ibDomainURL.sub! 'PROCESSMONITOR.PROCESSMONITOR.GBL?Page=PMN_SRVRLIST', 'IB_PROFILE.IB_DOMAINSTATUS.GBL'
+	ib_data = Hash.new
+
+	begin
+		domain_list = agent.get(ibDomainURL)
+		ib_domains = domain_list.search('//*[@id="win0divPSIBDSPSTATVW$0"]')
+		add_row(table, ib_domains, "data")
+
+	rescue
+		ib_data["disp_status"] = 'INACT'
+		add_row(table, ib_data, "data")
+	end
+
+	
 
 	begin
 		logoutURL = loginURL + '?cmd=logout'
@@ -145,7 +189,6 @@ URLs.each { |environment, loginURL, prcsURI|
 	rescue
 	end
 
-	add_row(table, domain, "environment")
 
 	# If a component is down, add the environment to the affectedEnvironments list
 	if domain["web_status"] == "Down" || domain["app_status"] == "Down" || domain["scheduler_status"] == "Down"
@@ -153,6 +196,7 @@ URLs.each { |environment, loginURL, prcsURI|
 	end
 }
 
+table << end_table
 
 status_file = ''
 status_file << File.read("header.html")
@@ -160,8 +204,7 @@ status_file << table
 status_file << File.read("footer.html")
 File.write("status.html", status_file)
 
-=begin
-deployFile = `xcopy status.html #{deployPath} /y`
+deployFile = system("powershell copy-item .\\status.html -destination #{deployPath} -Force")
 
 # If the environment is newly down, send the email
 # If the environment was already down (exists in 'down.txt'), don't resend the email
@@ -192,7 +235,6 @@ else
 
 end 
 
-
 if notify
 	mail = Mail.deliver do
 	  from     fromEmailAddress
@@ -211,5 +253,3 @@ if notify
 	  end
 	end 
 end # end Notify
-
-=end
