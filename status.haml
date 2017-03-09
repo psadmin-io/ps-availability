@@ -1,0 +1,14 @@
+%table
+  %tr
+  	- @headers.each do |header|
+  	  %td= header.title
+  %tr
+  	- @domains.each do |domain|
+  	  %td= domain.name
+  	  %td= domain.database_status
+  	  %td= domain.web_status
+  	  %td= domain.app_status
+  	  %td= domain.scheduler_name
+  	  %td= domain.scheduler_server
+  	  %td= domain.scheduler_last_update
+  	  %td= domain.scheduler_status

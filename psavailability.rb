@@ -9,9 +9,15 @@
 
 require 'mechanize'
 require 'csv'
-require 'redcarpet'
+require 'haml'
 require 'mail'
 require 'logger'
+
+def add_row(row_data, header = false)
+
+	
+
+end
 
 log = Logger.new('psavailability.log')
 log.level = Logger::INFO
@@ -37,120 +43,100 @@ affectedEnvironments = Array.new
 notify = false
 
 agent = Mechanize.new
-agent.user_agent_alias = 'Windows IE 9'
-
-table =          "| Environment | Database | Web Status | App Status | Scheduler | Batch Server | Update Time | Batch Status |\n"
-table = table +  "| ----------- | -------- | ---------- | ---------- | --------- | ------------ | ----------- | ------------ |\n"
+agent.user_agent_alias = 'Windows IE 11'
 
 # Get the list of environments
 # the URLs.txt file is a CSV file with the format "DBNAME,baseURL,processMonitorURI"
 URLs = CSV.read('URLs.txt', {:col_sep => ','})
 URLs.shift # Remove Header Row
 
+html = ''
+headers = ["Domain", "Database", "Web Server", "App Server", "Scheduler", "Batch Server", "Updated", "Batch Status"]
+
+
 URLs.each { |environment, loginURL, prcsURI|  
 
-		web_status = 'Running'
-		app_status = 'Running'
-		database   = 'Running'
+	domain = Hash.new
 
-		begin
-			t = `tnsping #{environment}`
+	domain["environment"] = environment
+	domain["web_status"] = 'Running'
+	domain["app_status"] = 'Running'
+	domain["database"]   = 'Running'
 
-			if t.lines.last.include? "OK"
-			    database = 'Running'
-			else
-			    database = 'Down'
-			end
-		rescue
-			database = 'Down'
+	begin
+		t = `tnsping #{environment}`
+
+		if t.lines.last.include? "OK"
+		    domain["database"] = 'Running'
+		else
+		    domain["database"] = 'Down'
 		end
+	rescue
+		domain["database"] = 'Down'
+	end
 
-		# Check web server by opening login page
-		begin
-			signon_page = agent.get(loginURL + '?cmd=login')
-		rescue
-			web_status = 'Down'
-		end
+	# Check web server by opening login page
+	begin
+		signon_page = agent.get(loginURL + '?cmd=login')
+	rescue
+		domain["web_status"] = 'Down'
+	end
 
-		begin 
-			signin_form = signon_page.form('login')
-			signin_form.userid = statusUser
-			signin_form.pwd = statusUserPwd
-			homepage = agent.submit(signin_form)
-			
-			# We updated PeopleTools > Portal > General Settings to include '9.2' in the title (e.g, "HR 9.2 Test"). 
-			# If we see '9.2' in the title, we know the login was successful
-			if homepage.title.include? homepageTitleCheck
-				app_status = 'Runnning'
-			else
-				app_status = 'Down'
-				log.info(homepage)
-			end
-		rescue
-			app_status = 'Down'
-		end
-
-		begin
-			# Build URL for Process Monitor and access the component page directly
-			procMonURL = loginURL + prcsURI
-			procMonURL.sub! '/psp/', '/psc/'
-
-			server_list = agent.get(procMonURL)
-			scheduler_status = ''
-
-			scheduler_status = ['', '', '', 'Down'].join(' | ')
-			schedulers = server_list.search(".PSLEVEL1GRID").collect do |html|
-				# Iterate through the Server List grid (but skip the first row - the header)
-				html.search("tr").collect.drop(1).each do |row|
-					server   	= row.search("td[1]/div/span/a").text.strip
-			    	hostname    = row.search("td[2]/div/span").text.strip
-			    	last_update = row.search("td[3]/div/span").text.strip
-					status    	= row.search("td[9]/div/span").text.strip
-
-					scheduler_status = [server, hostname, last_update, status].join(' | ')
-				end
-			end
-		rescue
-			scheduler_status = ['', '', '', 'Down'].join(' | ')
-		end
-
-		begin
-			logoutURL = loginURL + '?cmd=logout'
-			agent.get(logoutURL)
-			agent.cookie_jar.clear!
-		rescue
-		end
-
-		table = table + "| #{environment} | #{database} | #{web_status} | #{app_status} | #{scheduler_status} |\n"
+	begin 
+		signin_form = signon_page.form('login')
+		signin_form.userid = statusUser
+		signin_form.pwd = statusUserPwd
+		homepage = agent.submit(signin_form)
 		
-		# If a component is down, add the environment to the affectedEnvironments list
-		if web_status.include?("Down") || app_status.include?("Down") || scheduler_status.include?("Down")
-			affectedEnvironments.push(environment)
+		# We updated PeopleTools > Portal > General Settings to include '9.2' in the title (e.g, "HR 9.2 Test"). 
+		# If we see '9.2' in the title, we know the login was successful
+		if homepage.title.include? homepageTitleCheck
+			domain["app_status"] = 'Runnning'
+		else
+			domain["app_status"] = 'Down'
+			log.info(homepage)
 		end
+	rescue
+		domain["app_status"] = 'Down'
+	end
+
+	begin
+		# Build URL for Process Monitor and access the component page directly
+		procMonURL = loginURL + prcsURI
+		procMonURL.sub! '/psp/', '/psc/'
+
+		server_list = agent.get(procMonURL)
+		schedulers = server_list.search(".PSLEVEL1GRID").collect do |html|
+			# Iterate through the Server List grid (but skip the first row - the header)
+			html.search("tr").collect.drop(1).each do |row|
+				domain["server"]   		= row.search("td[1]/div/span/a").text.strip
+		    	domain["hostname"]    	= row.search("td[2]/div/span").text.strip
+		    	domain["last_update"] 	= row.search("td[3]/div/span").text.strip
+				domain["status"]    	= row.search("td[9]/div/span").text.strip
+			end
+		end
+	rescue
+		domain["status"] = 'Down'
+	end
+
+	## grab additional data for the environment
+
+	begin
+		logoutURL = loginURL + '?cmd=logout'
+		agent.get(logoutURL)
+		agent.cookie_jar.clear!
+	rescue
+	end
+
+	table = table + [environment, database, web_status, app_status, scheduler_status]
+	
+	# If a component is down, add the environment to the affectedEnvironments list
+	if domain["web_status"].include?("Down") || domain["app_status"].include?("Down") || domain["scheduler_status"].include?("Down")
+		affectedEnvironments.push(environment)
+	end
 }
 
-# Format Markdown table into an HTML table
-options = {
-  filter_html:     true,
-  link_attributes: { rel: 'nofollow', target: "_blank" },
-  space_after_headers: true
-}
 
-renderer = Redcarpet::Render::HTML.new(options)
-markdown = Redcarpet::Markdown.new(renderer, extensions = {tables: true})
-tableHTML = markdown.render(table)
-
-# Add a style to the "Down" fields
-if affectedEnvironments.empty?
-	tableStyleHTML = tableHTML
-else
-	tableStyleHTML = tableHTML.gsub! '<td>Down</td>', '<td class="down">Down</td>'
-end
-
-File.write('table.html', tableStyleHTML)
-
-# Combine the header, table, and footer HTML files into one status HTML file
-statusPage = `copy /a header.html+table.html+foother.html status.html`
 
 deployFile = `xcopy status.html #{deployPath} /y`
 
