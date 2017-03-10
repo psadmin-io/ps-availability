@@ -1,4 +1,4 @@
-# PeopleSoft System Status Notifications
+# ps-availability - PeopleSoft System Status
 
 Do you get notified if an app server, web server or process scheduler go down? If you do, good for you! If not, here is a solution I put together that will send you notifications (and build a status page) if a web server, app server, or process scheduler go down.
 
