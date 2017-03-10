@@ -11,6 +11,21 @@ require 'csv'
 require 'mail'
 require 'logger'
 
+# ---------------------------
+# Change these variables
+# ---------------------------
+smtpServer 				= '<smtp.server>'
+statusUser 				= '<PeopleSoft Username>'
+statusUserPwd 			= '<PeopleSoft Password>'
+homepageTitleCheck 		= '<Homepage Title>'
+homepageTitleCheckFluid = 'Homepage'
+fromEmailAddress 		= '<From Email>'
+toEmailAddress 			= '<To Email>'
+deployPath				= '<e:\\path\\to\\web\\server'
+zone 					= 'Central Time (US & Canada)'
+staleInterval			= 10
+# ---------------------------
+
 def add_row(status_table, row_data, row_type, opts = {})
 
 	# Build a new row and set the row type
@@ -23,6 +38,7 @@ def add_row(status_table, row_data, row_type, opts = {})
 		end
 	when row_type == "environment"
 		row_data.each do |key, item|
+			# If status field, add a class to the element so our CSS will set the appropriate color
 			if key.include? "status"
 				status_table << "<td class=\"#{item.downcase}\">#{item}</td>"
 			else
@@ -30,36 +46,17 @@ def add_row(status_table, row_data, row_type, opts = {})
 			end
 
 		end
+	# data rows are a single <td> with nested tables inside. Set the colspan to 100%
 	when row_type == "data"
-		status_table << "<td colspan=\"8\">"
-		# row_data.each do |key, item|
-		# 	status_table << key + ', ' + item + '</br>'
-		# end
+		status_table << "<td colspan=\"100%\">"
 		status_table << row_data.to_s
 	end
+
 	status_table << '</tr>'
 end
 
 log = Logger.new('psavailability.log')
 log.level = Logger::INFO
-
-# ---------------------------
-# Change these variables
-# ---------------------------
-smtpServer 				= 'mail.ci.minneapolis.mn.us'
-# statusUser 				= '<PeopleSoft Username>'
-# statusUserPwd 			= '<PeopleSoft Password>'
-# homepageTitleCheck 		= '<Homepage Title>'
-fromEmailAddress 		= 'comet_status@minneapolismn.gov'
-toEmailAddress 			= 'dan.iverson@minneapolismn.gov'
-deployPath				= 'E:\\psoft\\HR92DMO\\webserv\\hr92dmo\\applications\\peoplesoft\\PORTAL.war\\status\\'
-zone 					= "Central Time (US & Canada)" 
-staleInterval			= 10
-# ---------------------------
-
-statusUser = 'STATUS'
-statusUserPwd = 'gCdRIL+5eWGZ'
-homepageTitleCheck = '9.2'
 
 Mail.defaults do
   delivery_method :smtp, address: smtpServer, port: 25
@@ -120,12 +117,18 @@ URLs.each { |environment, loginURL, prcsURI|
 		
 		# We updated PeopleTools > Portal > General Settings to include '9.2' in the title (e.g, "HR 9.2 Test"). 
 		# If we see '9.2' in the title, we know the login was successful
-		if homepage.title.include? homepageTitleCheck
-			domain["app_status"] = 'Runnning'
-		else
-			domain["app_status"] = 'Down'
-			log.info(homepage)
-		end
+		# 	Add 'Homepage' for Fluid demo environments
+			if homepage.title.include? homepageTitleCheck
+				domain["app_status"] = 'Running'
+			else
+				# Fluid check
+				if homepage.title.include? homepageTitleCheckFluid
+					domain["app_status"] = 'Running'
+				else 
+					domain["app_status"] = 'Down'
+					log.info(homepage)
+				end
+			end
 	rescue
 		domain["app_status"] = 'Down'
 	end
@@ -142,21 +145,30 @@ URLs.each { |environment, loginURL, prcsURI|
 				domain["server"]   		= row.search("td[1]/div/span/a").text.strip
 		    	domain["hostname"]    	= row.search("td[2]/div/span").text.strip
 		    	domain["last_update"] 	= row.search("td[3]/div/span").text.strip.gsub("\u00A0", "")
-				domain["status"]    	= row.search("td[9]/div/span").text.strip
+				domain["prcs_status"]   = row.search("td[9]/div/span").text.strip
 
 				# If last_update is more than 30 minutes ago, set scheduler status to Stale
+				
 				last_upd = DateTime.strptime("#{domain['last_update']} #{zone}", '%m/%d/%Y %l:%M:%S%p %Z')
 				now = DateTime.now
 				diff = ((now - last_upd) * 24 * 60).to_i
-				
+			
 				if diff > staleInterval
-					domain["status"] = "Stale"
+					domain["prcs_status"]   = 'Stale'
 				end
-
+			
 			end
 		end
+
+		# If app server is down, we can't reach the server list page so our scheduler status is blank.
+		if domain["prcs_status"].strip.nil?
+			domain["prcs_status"] = 'Down'
+		end
 	rescue
-		domain["status"] = 'Down'
+		domain["server"]   	 	= ' '	
+		domain["hostname"]   	= ' '
+		domain["last_update"]	= ' '
+		domain["prcs_status"] = 'Down'
 	end
 
 	add_row(table, domain, "environment")
@@ -181,7 +193,7 @@ URLs.each { |environment, loginURL, prcsURI|
 	end
 
 	
-
+	# logout and clean up the cookies
 	begin
 		logoutURL = loginURL + '?cmd=logout'
 		agent.get(logoutURL)
@@ -191,13 +203,14 @@ URLs.each { |environment, loginURL, prcsURI|
 
 
 	# If a component is down, add the environment to the affectedEnvironments list
-	if domain["web_status"] == "Down" || domain["app_status"] == "Down" || domain["scheduler_status"] == "Down"
+	if domain["web_status"] == "Down" || domain["app_status"] == "Down" || domain["prcs_status"] == "Down"
 		affectedEnvironments.push(environment)
 	end
 }
 
 table << end_table
 
+# Build out status.html file
 status_file = ''
 status_file << File.read("header.html")
 status_file << table
@@ -235,21 +248,21 @@ else
 
 end 
 
+
+
+doc = Nokogiri::HTML(File.read('status.html'))
+doc.search('tr.data').remove	    
+
 if notify
 	mail = Mail.deliver do
 	  from     fromEmailAddress
 	  to       toEmailAddress
 	  subject  'PeopleSoft System Status: ' + affectedEnvironments.join(", ") + ' Down'
 
-	  # use the markdown table as the text version
-	  text_part do 
-	  	body = table
-	  end
-
 	  # use the status.html file as the HTML version
 	  html_part do
 	    content_type 'text/html; charset=UTF-8'
-	    body File.read('status.html')
+	    body doc.to_html
 	  end
 	end 
 end # end Notify

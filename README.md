@@ -10,6 +10,25 @@ This page and script is something I put together over a few days. We wanted a si
 
 This isn't the most robust script (I'll explain the limitations in the post), but I wanted to share the scripts so other people could use it. If you rely on end users to tell if you an environment is down, this script can help you out.
 
+**Version 2.0**
+
+I made some improvements to the script for version 2.0. 
+
+* Removed `Redcarpet` gem dependancy and interim Markdown tables
+* Switched from `.bat` files and commands to Powershell
+* Added checks for Fluid homepages
+* Check for Stale process schedulers
+* Report back IB Domain Status (only reports - does not influence up/down notifications)
+* Hide IB Domain info - click on environment to see detail
+
+With Version 2.0, there are three additional configuration settings in the file: 
+
+* Fluid Homepage title check (default: `Homepage`)
+* Time zone for your process schedulers (default: `US Central`)
+* Stale interval for your process schedulers (default: `30` minutes)
+
+[Here is the blog post announcing version 2.0.]()
+
 ## Install Prerequisites
 
 The script is written in Ruby, uses Mechanize gem for interacting with Peoplesoft, Markdown for formatting, the Redcarpet gem for generating HTML documents, and the Mail gem for emailing status updates. So we'll need to install all those parts. It sounds like a lot, but it's pretty simple.
@@ -52,7 +71,6 @@ Ruby has a powerful package manager called "Gems". The `gem` command is part of 
 Make sure this command points to our new `e:\ruby22-x64` folder first.
 
 1.  `gem install mechanize`
-2.  `gem install redcarpet`
 3.  `gem install mail`
 
 That's it for the Gems.
