@@ -147,14 +147,15 @@ URLs.each { |environment, loginURL, prcsURI|
 		    	domain["last_update"] 	= row.search("td[3]/div/span").text.strip.gsub("\u00A0", "")
 				domain["prcs_status"]   = row.search("td[9]/div/span").text.strip
 
-				# If last_update is more than 30 minutes ago, set scheduler status to Stale
+				if domain["prcs_status"] == "Running"
+					# If last_update is more than 30 minutes ago, set scheduler status to Stale
+					last_upd = DateTime.strptime("#{domain['last_update']} #{zone}", '%m/%d/%Y %l:%M:%S%p %Z')
+					now = DateTime.now
+					diff = ((now - last_upd) * 24 * 60).to_i
 				
-				last_upd = DateTime.strptime("#{domain['last_update']} #{zone}", '%m/%d/%Y %l:%M:%S%p %Z')
-				now = DateTime.now
-				diff = ((now - last_upd) * 24 * 60).to_i
-			
-				if diff > staleInterval
-					domain["prcs_status"]   = 'Stale'
+					if diff > staleInterval
+						domain["prcs_status"]   = 'Stale'
+					end
 				end
 			
 			end
